@@ -175,7 +175,7 @@ function draw() {
     if (minDimension === null) {
       return;
     }
-    background(255);
+    background(0,0,0,0);
 
     let croppedImage;
 
