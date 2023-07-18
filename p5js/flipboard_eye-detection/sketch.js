@@ -54,3 +54,7 @@ function drawKeypoints() {
 function mouseClicked() {
   paused = !paused;
 }
+
+function modelReady() {
+  select('#status').hide();
+}
