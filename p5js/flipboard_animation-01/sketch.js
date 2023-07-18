@@ -15,7 +15,7 @@ let colorState = 0;
 const PLAY_DELAY = 150; // time in milliseconds
 let showWebcam = true;
 
-let gridSize = 30;
+let gridSize = 22;
 let gridWidth;
 let gridHeight;
 let padding = 2;
