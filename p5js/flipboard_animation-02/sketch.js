@@ -10,9 +10,9 @@ let minDimension = null;
 let cropXStart, cropYStart;
 
 let awSize = 800;
-let paused = false;
+let paused = true;
 
-let showWebcam = true;
+let showWebcam = false;
 
 let gridSize = 34;
 let gridWidth;
