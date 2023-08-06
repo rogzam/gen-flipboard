@@ -13,7 +13,7 @@ let camScale = 2.5;
 
 let cubes = [];
 
-let paused = false;
+let paused = true;
 
 class RotatingCube {
   constructor(x, y, sideLength, depth) {
