@@ -12,7 +12,7 @@ let cropXStart, cropYStart;
 let awSize = 800;
 let paused = false;
 
-let showWebcam = false;
+let showWebcam = true;
 
 let gridSize = 34;
 let gridWidth;
