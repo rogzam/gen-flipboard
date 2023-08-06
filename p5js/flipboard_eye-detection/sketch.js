@@ -1,7 +1,7 @@
 let video;
 let poseNet;
 let poses = [];
-let paused = false;
+let paused = true;
 
 function setup() {
   createCanvas(800, 600);
