@@ -15,6 +15,10 @@ let cubes = [];
 
 let paused = true;
 
+function preload() {
+  myFont = loadFont("consolas.ttf");
+}
+
 class RotatingCube {
   constructor(x, y, sideLength, depth) {
     this.x = x;
@@ -131,68 +135,63 @@ function setup() {
 
 function draw() {
   if (!paused) {
-    
-  background(0, 0, 0, 0);
-  croppedImage = capture.get(0, 0, 800, 800);
-  capture.loadPixels();
+    background(0, 0, 0, 0);
+    croppedImage = capture.get(0, 0, 800, 800);
+    capture.loadPixels();
 
-  for (let cube of cubes) {
-    let xStart = map(
-      cube.x - cube.halfLength,
-      -width / 2,
-      width / 2,
-      0,
-      800
-    );
-    let xEnd = map(
-      cube.x + cube.halfLength,
-      -width / 2,
-      width / 2,
-      0,
-      800
-    );
-    let yStart = map(
-      cube.y - cube.halfLength,
-      -height / 2,
-      height / 2,
-      0,
-      800
-    );
-    let yEnd = map(
-      cube.y + cube.halfLength,
-      -height / 2,
-      height / 2,
-      0,
-      800
-    );
-    let rSum = 0,
-      gSum = 0,
-      bSum = 0,
-      count = 0;
+    for (let cube of cubes) {
+      let xStart = map(cube.x - cube.halfLength, -width / 2, width / 2, 0, 800);
+      let xEnd = map(cube.x + cube.halfLength, -width / 2, width / 2, 0, 800);
+      let yStart = map(
+        cube.y - cube.halfLength,
+        -height / 2,
+        height / 2,
+        0,
+        800
+      );
+      let yEnd = map(cube.y + cube.halfLength, -height / 2, height / 2, 0, 800);
+      let rSum = 0,
+        gSum = 0,
+        bSum = 0,
+        count = 0;
 
-    for (let x = floor(xStart); x <= floor(xEnd); x++) {
-      for (let y = floor(yStart); y <= floor(yEnd); y++) {
-        let index = 4 * (x + capture.width * y);
-        rSum += capture.pixels[index];
-        gSum += capture.pixels[index + 1];
-        bSum += capture.pixels[index + 2];
-        count++;
+      for (let x = floor(xStart); x <= floor(xEnd); x++) {
+        for (let y = floor(yStart); y <= floor(yEnd); y++) {
+          let index = 4 * (x + capture.width * y);
+          rSum += capture.pixels[index];
+          gSum += capture.pixels[index + 1];
+          bSum += capture.pixels[index + 2];
+          count++;
+        }
       }
+
+      let gray = (rSum + gSum + bSum) / (3 * count);
+      cube.setAngleFromGrayscale(gray);
+      cube.draw();
     }
 
-    let gray = (rSum + gSum + bSum) / (3 * count);
-    cube.setAngleFromGrayscale(gray);
-    cube.draw();
+    if (showWebcam) {
+      push();
+      translate(0, 0, 2);
+      scale(1 / camScale, 1 / camScale);
+      image(
+        croppedImage,
+        canvasSize / 2 + canvasSize / camScale,
+        canvasSize / 2 + canvasSize / camScale,
+        canvasSize / camScale,
+        canvasSize / camScale
+      );
+      pop();
+    }
+  } else {
+    // Render the "- click to start -" message
+    background(0,0,0,0); // Clear background
+    fill(255); // White color
+    textAlign(CENTER, CENTER);
+    textFont(myFont);
+    textSize(14); // Adjust as necessary
+    text("- click to start -", 0, 0); // Center of the canvas because of WEBGL mode
   }
-
-  if (showWebcam) {
-    push();
-    translate(0, 0, 2);
-    scale(1 / camScale, 1 / camScale);
-    image(croppedImage, canvasSize / 2 + canvasSize / camScale, canvasSize / 2 + canvasSize / camScale, canvasSize / camScale, canvasSize / camScale);
-    pop();
-  }
-}
 }
 
 function windowResized() {
@@ -207,8 +206,20 @@ function initializeCubes() {
 
   for (let i = 0; i < gridSize; i++) {
     for (let j = 0; j < gridSize; j++) {
-      let cubeX = map(i, 0, gridSize - 1, -width / 2 + cubeSize / 2 + padding, width / 2 - cubeSize / 2 - padding);
-      let cubeY = map(j, 0, gridSize - 1, -height / 2 + cubeSize / 2 + padding, height / 2 - cubeSize / 2 - padding);
+      let cubeX = map(
+        i,
+        0,
+        gridSize - 1,
+        -width / 2 + cubeSize / 2 + padding,
+        width / 2 - cubeSize / 2 - padding
+      );
+      let cubeY = map(
+        j,
+        0,
+        gridSize - 1,
+        -height / 2 + cubeSize / 2 + padding,
+        height / 2 - cubeSize / 2 - padding
+      );
       let cubeZ = 0;
       cubes.push(new RotatingCube(cubeX, cubeY, cubeSize, cubeSize));
     }
