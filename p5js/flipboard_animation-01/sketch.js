@@ -189,7 +189,7 @@ function draw() {
     fill(255); // White color
     textAlign(CENTER, CENTER);
     textFont(myFont);
-    textSize(14); // Adjust as necessary
+    textSize(16); // Adjust as necessary
     text("- click to start -", 0, 0); // Center of the canvas because of WEBGL mode
   }
 }
