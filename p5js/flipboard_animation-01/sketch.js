@@ -185,7 +185,7 @@ function draw() {
     }
   } else {
     // Render the "- click to start -" message
-    background(0,0,0,0); // Clear background
+    background(0,0,0,255); // Clear background
     fill(255); // White color
     textAlign(CENTER, CENTER);
     textFont(myFont);
