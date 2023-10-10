@@ -284,6 +284,14 @@ function draw() {
       pop();
     }
     drawKeypoints();
+  } else {
+    // Render the "- click to start -" message
+    background(0,0,0,0); // Clear background
+    fill(255); // White color
+    textAlign(CENTER, CENTER);
+    textFont(myFont);
+    textSize(16); // Adjust as necessary
+    text("- click to start -", 0, 0); // Center of the canvas because of WEBGL mode
   }
 }
 
@@ -293,6 +301,10 @@ function onCaptureReady() {
   minDimension = Math.min(rawWidth, rawHeight);
   cropXStart = (rawWidth - minDimension) / 2;
   cropYStart = (rawHeight - minDimension) / 2;
+}
+
+function preload() {
+  myFont = loadFont("consolas.ttf");
 }
 
 function windowResized() {
