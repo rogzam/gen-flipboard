@@ -3,6 +3,10 @@ let poseNet;
 let poses = [];
 let paused = true;
 
+function preload() {
+  myFont = loadFont("consolas.ttf");
+}
+
 function setup() {
   createCanvas(800, 600);
   video = createCapture(VIDEO);
@@ -29,6 +33,14 @@ function draw() {
     image(video, 0, 0, width, height);
     noTint(); // reset opacity back to 100% for keypoints drawing
     drawKeypoints();
+  } else {
+    // Render the "- click to start -" message
+    background(0,0,0,0); // Clear background
+    fill(255); // White color
+    textAlign(CENTER, CENTER);
+    textFont(myFont);
+    textSize(16); // Adjust as necessary
+    text("- click to start -", width/2, height/2); // Center of the canvas because of WEBGL mode
   }
 }
 
@@ -58,3 +70,4 @@ function mouseClicked() {
 function modelReady() {
   select('#status').hide();
 }
+
